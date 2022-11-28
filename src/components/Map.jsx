@@ -22,11 +22,10 @@ export default function Map() {
 			}
 		}
 
-		const margin = { top: 50, right: 10, bottom: 30, left: 30 };
-		const width =
-			parseInt(d3.select("#d3").style("width")) - margin.left - margin.right;
+		const margin = { top: 0, right: 0, bottom: 0, left: 0 };
 		const height =
 			parseInt(d3.select("#d3").style("height")) - margin.top - margin.bottom;
+		const width = ((y_max - y_min) * height) / (x_max - x_min);
 
 		var vis = d3
 				.select(d3Chart.current)
@@ -54,7 +53,7 @@ export default function Map() {
 	}, []);
 
 	return (
-		<div id="d3" className="w-4/5 h-4/5">
+		<div id="d3" className="h-4/5">
 			<svg ref={d3Chart}></svg>
 		</div>
 	);
