@@ -4,9 +4,23 @@ import RAW from "../assets/S07_AC.json";
 
 export default function Map() {
 	const d3Chart = useRef();
-
 	const dataset = RAW.features;
-	console.log(dataset[0].geometry.coordinates[0]);
+
+	// const [dimensions, setDimensions] = React.useState({
+	// 	height: window.innerHeight,
+	// 	width: window.innerWidth,
+	// });
+
+	// useEffect(() => {
+	// 	function handleResize() {
+	// 		setDimensions({
+	// 			height: window.innerHeight,
+	// 			width: window.innerWidth,
+	// 		});
+	// 	}
+
+	// 	window.addEventListener("resize", handleResize);
+	// });
 
 	useEffect(() => {
 		let x_min = 10000,
@@ -23,9 +37,20 @@ export default function Map() {
 		}
 
 		const margin = { top: 0, right: 0, bottom: 0, left: 0 };
-		const height =
-			parseInt(d3.select("#d3").style("height")) - margin.top - margin.bottom;
-		const width = ((y_max - y_min) * height) / (x_max - x_min);
+		let width, height;
+
+		if (
+			parseInt(d3.select("#d3").style("width")) <
+			parseInt(d3.select("#d3").style("height"))
+		) {
+			width =
+				parseInt(d3.select("#d3").style("width")) - margin.left - margin.right;
+			height = ((y_max - y_min) * width) / (x_max - x_min);
+		} else {
+			height =
+				parseInt(d3.select("#d3").style("height")) - margin.top - margin.bottom;
+			width = ((x_max - x_min) * height) / (y_max - y_min);
+		}
 
 		var vis = d3
 				.select(d3Chart.current)
@@ -53,7 +78,7 @@ export default function Map() {
 	}, []);
 
 	return (
-		<div id="d3" className="h-full">
+		<div id="d3" className="h-full w-full flex justify-center items-center">
 			<svg ref={d3Chart}></svg>
 		</div>
 	);
