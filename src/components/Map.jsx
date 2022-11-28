@@ -53,7 +53,7 @@ export default function Map() {
 	}, []);
 
 	return (
-		<div id="d3" className="h-4/5">
+		<div id="d3" className="h-full">
 			<svg ref={d3Chart}></svg>
 		</div>
 	);
